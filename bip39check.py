@@ -60,7 +60,6 @@ def main():
     m = Bip39Check('english')
     phrase = sys.stdin.readline().split()
     m._check_size(phrase)
-    print(m._compute_entropy(phrase))
     m._scan()
 
 if __name__ == '__main__':
