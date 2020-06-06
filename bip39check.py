@@ -1,8 +1,7 @@
-#!/usr/bin/env python
-import binascii
-import hashlib
 import os
 import sys
+import hashlib
+import binascii
 
 class Bip39Check(object):
     def __init__(self, language):
@@ -19,7 +18,7 @@ class Bip39Check(object):
                 self.wordlist.append(word)
                 counter = counter + 1
 
-         if(len(self.worddict) != self.radix):
+        if(len(self.worddict) != self.radix):
             raise ValueError('Expecting %d words, not %d', self.radix, len(self.worddict))
 
     @classmethod
