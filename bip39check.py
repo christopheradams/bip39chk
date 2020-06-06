@@ -28,7 +28,7 @@ class Bip39Check(object):
     def _check_size(self, phrase):
         self.size = len(phrase) + 1
         if (self.size % 3 != 0):
-            raise ValueError('Expecting 2,5,8,11,14,17,20 or 23 words')
+            raise ValueError('Expecting 11 or 23 words')
 
     def _compute_entropy(self, phrase):
         self.entropy = 0
@@ -58,6 +58,7 @@ class Bip39Check(object):
 
 def main():
     m = Bip39Check('english')
+    print("Enter 11 or 23 words: ")
     phrase = sys.stdin.readline().split()
     m._check_size(phrase)
     m._compute_entropy(phrase)
