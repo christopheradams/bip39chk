@@ -1,3 +1,5 @@
+!!!Fixed some glitches!!! 
+
 # BIP39 checksum word
 
 ### Create your own semi-non-sensical BIP-39 mnemonic sentence
@@ -26,13 +28,13 @@ For a 24 word phrase, we would only supply 23 words and see what legal words are
 ```
 $ python bip39check.py english
 arctic army kangaroo jump jealous dog dismiss dinosaur dolphin double door dragon dove drastic drop casino chase bulk cash caught action acoustic sound
-armor
-captain
-fan
-lake
-ordinary
-rich
-science
+beach
+cliff
+dose
+jewel
+manual
+race
+select
 theme
 ```
 
