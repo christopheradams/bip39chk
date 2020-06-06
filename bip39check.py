@@ -19,7 +19,7 @@ class Bip39Check(object):
                 self.wordlist.append(word)
                 counter = counter + 1
 
-        if(len(self.worddict) != self.radix):
+         if(len(self.worddict) != self.radix):
             raise ValueError('Expecting %d words, not %d', self.radix, len(self.worddict))
 
     @classmethod
@@ -40,16 +40,13 @@ class Bip39Check(object):
 
     def _scan(self):
         checksum_bits = self.size // 3
-        hex_digits = self.size * 32 // 4
         entropy_to_fill = 11 - checksum_bits
         entropy_base = self.entropy << (entropy_to_fill)
 
         for i in range(0, 2 ** entropy_to_fill):
             entropy_candidate = entropy_base | i
-            fmt = '%%0%sx' % hex_digits
-            entropy_str = binascii.unhexlify(fmt % entropy_candidate)
-            hash = hashlib.sha256(entropy_str).digest()[0]
-            hash = ord(hash) if sys.version < '3' else hash
+            entropy_str = binascii.unhexlify('%0x' % entropy_candidate)
+            hash = (hashlib.sha256(entropy_str).digest()[0])
             checksum = hash >> (8 - checksum_bits)
             final_word_idx = (i << checksum_bits) + checksum
             checkword = self.wordlist[final_word_idx]
@@ -57,12 +54,10 @@ class Bip39Check(object):
 
 
 def main():
-    lang = 'english' if len(sys.argv) < 2 else sys.argv[1].strip()
-    m = Bip39Check(lang)
-    line = sys.stdin.readline().decode('utf8').strip() if sys.version < '3' else sys.stdin.readline().strip()
-    phrase = line.replace(u'\u3000', ' ').split()
+    m = Bip39Check('english')
+    phrase = sys.stdin.readline().split()
     m._check_size(phrase)
-    m._compute_entropy(phrase)
+    print(m._compute_entropy(phrase))
     m._scan()
 
 if __name__ == '__main__':
