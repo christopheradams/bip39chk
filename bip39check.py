@@ -11,9 +11,9 @@ class Bip39Check(object):
 
         counter = 0
 
-        with open('%s/%s.txt' % (self._get_directory(), language), 'r') as file:
+        with open('english.txt', 'r') as file:
             for w in file.readlines():
-                word = w.strip().decode('utf8') if sys.version < '3' else w.strip()
+                word = w.strip() if sys.version < '3' else w.strip()
                 self.worddict[word] = counter
                 self.wordlist.append(word)
                 counter = counter + 1
@@ -44,7 +44,11 @@ class Bip39Check(object):
 
         for i in range(0, 2 ** entropy_to_fill):
             entropy_candidate = entropy_base | i
-            entropy_str = binascii.unhexlify('%0x' % entropy_candidate)
+            if (len(str(entropy_candidate)) % 2) ==0:
+                entropy_str = binascii.unhexlify('0%x' % (entropy_candidate))
+            else:
+                entropy_str = binascii.unhexlify('%x' % (entropy_candidate))
+
             hash = (hashlib.sha256(entropy_str).digest()[0])
             checksum = hash >> (8 - checksum_bits)
             final_word_idx = (i << checksum_bits) + checksum
