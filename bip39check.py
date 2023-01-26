@@ -1,7 +1,6 @@
 import os
 import sys
 import hashlib
-import binascii
 
 class Bip39Check(object):
     def __init__(self, language):
@@ -39,16 +38,13 @@ class Bip39Check(object):
 
     def _scan(self):
         checksum_bits = self.size // 3
+        entropy_size = (self.size * 11 - checksum_bits) // 8 # Fixed entropy string length
         entropy_to_fill = 11 - checksum_bits
         entropy_base = self.entropy << (entropy_to_fill)
 
         for i in range(0, 2 ** entropy_to_fill):
             entropy_candidate = entropy_base | i
-            if (len(str(entropy_candidate)) % 2) ==0:
-                entropy_str = binascii.unhexlify('0%x' % (entropy_candidate))
-            else:
-                entropy_str = binascii.unhexlify('%x' % (entropy_candidate))
-
+            entropy_str = (entropy_candidate).to_bytes(entropy_size, 'big')
             hash = (hashlib.sha256(entropy_str).digest()[0])
             checksum = hash >> (8 - checksum_bits)
             final_word_idx = (i << checksum_bits) + checksum
