@@ -12,7 +12,7 @@ class Bip39Check(object):
 
         with open('%s/%s.txt' % (self._get_directory(), language), 'r') as file:
             for w in file.readlines():
-                word = w.strip() if sys.version < '3' else w.strip()
+                word = w.strip()
                 self.worddict[word] = counter
                 self.wordlist.append(word)
                 counter = counter + 1
