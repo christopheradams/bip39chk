@@ -53,7 +53,8 @@ class Bip39Check(object):
 
 
 def main():
-    m = Bip39Check('english')
+    lang = 'english' if len(sys.argv) < 2 else sys.argv[1].strip()
+    m = Bip39Check(lang)
     print("Enter 11 or 23 words: ")
     phrase = sys.stdin.readline().split()
     m._check_size(phrase)
