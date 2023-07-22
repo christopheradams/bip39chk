@@ -49,7 +49,7 @@ class Bip39Check(object):
             checksum = hash >> (8 - checksum_bits)
             final_word_idx = (i << checksum_bits) + checksum
             checkword = self.wordlist[final_word_idx]
-            print (checkword)
+            print (final_word_idx, checkword)
 
 
 def main():
